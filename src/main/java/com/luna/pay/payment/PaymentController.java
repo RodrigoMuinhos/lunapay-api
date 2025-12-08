@@ -52,6 +52,20 @@ public class PaymentController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/{id}/status")
+    public ResponseEntity<PaymentStatusResponse> getPaymentStatus(
+            @PathVariable String id,
+            @AuthenticationPrincipal UserContext user) {
+
+        return paymentService.findById(id, user.getTenantId())
+                .map(payment -> ResponseEntity.ok(new PaymentStatusResponse(
+                        payment.getId(),
+                        payment.getStatus(),
+                        payment.getGatewayPaymentId()
+                )))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelPayment(
             @PathVariable String id,
@@ -60,4 +74,7 @@ public class PaymentController {
         paymentService.cancelPayment(id, user.getTenantId());
         return ResponseEntity.noContent().build();
     }
+
+    // DTO inline para status
+    public record PaymentStatusResponse(String id, PaymentStatus status, String gatewayPaymentId) {}
 }
