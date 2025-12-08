@@ -28,3 +28,20 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+
+payment:
+  gateways:
+    config:
+      asaas:
+        enabled: ${ASAAS_ENABLED:false}
+        apiKey: ${ASAAS_API_KEY:}
+        baseUrl: ${ASAAS_BASE_URL:https://api.asaas.com/v3}
+        webhookSecret: ${ASAAS_WEBHOOK_SECRET:}
+        timeoutSeconds: 30
+      c6:
+        enabled: ${C6_ENABLED:false}
+        apiKey: ${C6_API_KEY:}
+        apiSecret: ${C6_API_SECRET:}
+        baseUrl: ${C6_BASE_URL:https://api.c6bank.com.br}
+        webhookSecret: ${C6_WEBHOOK_SECRET:}
+        timeoutSeconds: 30

@@ -85,16 +85,27 @@ LunaPay OK para tenant {tenantId} (user: {userId})
 - `jjwt` - JWT (validação de tokens)
 - `lombok` - Redução de boilerplate
 
-## 🎯 Próximos Passos
+## 🎯 Status do Projeto
 
 1. ✅ Estrutura base do projeto
-2. ✅ Segurança e multi-tenant
-3. ✅ Modelo de Payment
-4. ⏳ Endpoint POST /payments/create
-5. ⏳ Integração com Asaas
-6. ⏳ Integração com C6
-7. ⏳ Webhooks de confirmação
-8. ⏳ Gestão de status de pagamentos
+2. ✅ Segurança e multi-tenant (JWT + módulo LUNAPAY)
+3. ✅ Modelo de Payment completo
+4. ✅ DTOs e validações
+5. ✅ Serviço de pagamento
+6. ✅ Endpoints REST (criar, listar, buscar, cancelar)
+7. ✅ Estrutura de gateways (interface + stub)
+8. ✅ Implementação STUB Asaas e C6
+9. ✅ Webhooks (endpoints prontos)
+10. ✅ Tratamento de exceções global
+11. ⏳ **Aguardando credenciais** para integração real com Asaas e C6
+
+## 📚 Documentação
+
+Veja exemplos completos de uso da API em [API_EXAMPLES.md](./API_EXAMPLES.md)
+
+## 🔐 Módulo LUNAPAY Obrigatório
+
+Esta API só funciona se o tenant tiver o módulo **LUNAPAY** habilitado no LunaCore. O filtro JWT valida automaticamente se o token possui este módulo.
 
 ## 📝 Licença
 

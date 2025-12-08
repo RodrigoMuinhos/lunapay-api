@@ -27,6 +27,25 @@ public class Payment {
 
     private String gateway;
     private String gatewayPaymentId;
+    private String paymentMethod;
+
+    // PIX
+    @Column(length = 1000)
+    private String pixQrCode;
+    @Column(length = 2000)
+    private String pixQrCodeBase64;
+    @Column(length = 1000)
+    private String pixCopyPaste;
+    private Instant pixExpiresAt;
+
+    // Boleto
+    private String boletoBarCode;
+    private String boletoUrl;
+    private Instant boletoExpiresAt;
+
+    // Cartão
+    private String authorizationCode;
+    private String nsu;
 
     private Instant createdAt;
     private Instant updatedAt;
