@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: lunapay
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lunapay
+    username: lunapay
+    password: secret
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    show-sql: true
+
+server:
+  port: 8082
+
+jwt:
+  secret: ${LUNACORE_JWT_SECRET:dev-secret}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
