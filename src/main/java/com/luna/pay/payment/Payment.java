@@ -2,6 +2,11 @@ package com.luna.pay.payment;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -9,6 +14,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "payments")
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class Payment {
 
     @Id
@@ -47,18 +53,22 @@ public class Payment {
     private String authorizationCode;
     private String nsu;
 
+    @CreatedDate
     private Instant createdAt;
+    
+    @LastModifiedDate
     private Instant updatedAt;
+    
+    @CreatedBy
+    @Column(name = "created_by", updatable = false)
+    private String createdBy;
+    
+    @LastModifiedBy
+    @Column(name = "modified_by")
+    private String modifiedBy;
 
     @PrePersist
     void prePersist() {
-        createdAt = Instant.now();
-        updatedAt = createdAt;
         if (status == null) status = PaymentStatus.PENDING;
-    }
-
-    @PreUpdate
-    void preUpdate() {
-        updatedAt = Instant.now();
     }
 }

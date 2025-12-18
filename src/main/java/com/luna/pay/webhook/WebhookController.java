@@ -29,38 +29,6 @@ public class WebhookController {
                 ));
     }
 
-    @PostMapping("/asaas")
-    public ResponseEntity<String> asaasWebhook(
-            @RequestHeader(value = "X-Asaas-Signature", required = false) String signature,
-            @RequestBody String payload) {
-
-        log.info("Recebido webhook do Asaas");
-
-        PaymentGateway gateway = getGatewayMap().get("asaas");
-        if (gateway == null || !gateway.isEnabled()) {
-            log.warn("Gateway Asaas não está habilitado");
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Gateway not enabled");
-        }
-
-        // Valida assinatura
-        if (signature != null && !gateway.validateWebhook(signature, payload)) {
-            log.warn("Assinatura inválida no webhook Asaas");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid signature");
-        }
-
-        // Processa webhook
-        WebhookProcessingResult result = gateway.processWebhook(payload);
-
-        if (result.isSuccess()) {
-            log.info("Webhook Asaas processado com sucesso: {}", result.getMessage());
-            return ResponseEntity.ok("Webhook processed");
-        } else {
-            log.error("Erro ao processar webhook Asaas: {}", result.getErrorMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error processing webhook");
-        }
-    }
-
     @PostMapping("/c6")
     public ResponseEntity<String> c6Webhook(
             @RequestHeader(value = "X-C6-Signature", required = false) String signature,

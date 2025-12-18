@@ -16,11 +16,11 @@ public class JwtUtil {
 
     private Claims getClaims(String token) {
         try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes()))
+            return Jwts.parser()
+                    .verifyWith(Keys.hmacShaKeyFor(secret.getBytes()))
                     .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+                    .parseSignedClaims(token)
+                    .getPayload();
         } catch (JwtException e) {
             return null;
         }

@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@ConfigurationProperties(prefix = "payment.gateways")
+@ConfigurationProperties(prefix = "payment")
 @Data
 public class GatewayConfig {
 
-    private Map<String, GatewayProperties> config = new HashMap<>();
+    private Map<String, GatewayProperties> gateways = new HashMap<>();
 
     @Data
     public static class GatewayProperties {
@@ -21,19 +21,21 @@ public class GatewayConfig {
         private String apiSecret;
         private String baseUrl;
         private String webhookSecret;
+        private String walletId;
+        private String environment = "sandbox";
         private Integer timeoutSeconds = 30;
     }
 
     public GatewayProperties getAsaas() {
-        return config.getOrDefault("asaas", new GatewayProperties());
+        return gateways.getOrDefault("asaas", new GatewayProperties());
     }
 
     public GatewayProperties getC6() {
-        return config.getOrDefault("c6", new GatewayProperties());
+        return gateways.getOrDefault("c6", new GatewayProperties());
     }
 
     public boolean isGatewayEnabled(String gateway) {
-        GatewayProperties props = config.get(gateway.toLowerCase());
+        GatewayProperties props = gateways.get(gateway.toLowerCase());
         return props != null && props.isEnabled();
     }
 }
